@@ -1,0 +1,126 @@
+[gd_scene load_steps=7 format=3 uid="uid://c6y7v6x4k4k6"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_script"]
+[ext_resource type="Shader" path="res://pixel_art.gdshader" id="2_shader"]
+[ext_resource type="PackedScene" uid="uid://b8d3n2k3m4p5" path="res://sedan-sports.glb" id="3_car"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
+render_priority = 10
+shader = ExtResource("2_shader")
+shader_parameter/pixelation_level = 8
+shader_parameter/crush = 4.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_1"]
+size = Vector2(2, 2)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
+size = Vector2(100, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_grid"]
+albedo_color = Color(0.2, 0.4, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mountain"]
+size = Vector3(50, 20, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mountain"]
+albedo_color = Color(0.3, 0.2, 0.5, 1)
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.4, 0.7, 1.0, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+tonemap_mode = 3
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 10, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.5, 5)
+fov = 60.0
+
+[node name="PixelArtOverlay" type="MeshInstance3D" parent="Camera3D"]
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_1")
+surface_material_override/0 = SubResource("ShaderMaterial_1")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_ground")
+surface_material_override/0 = SubResource("StandardMaterial3D_grid")
+
+[node name="Backdrop" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40)
+
+[node name="Mountain" type="MeshInstance3D" parent="Backdrop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+mesh = SubResource("BoxMesh_mountain")
+surface_material_override/0 = SubResource("StandardMaterial3D_mountain")
+
+[node name="Car" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="sedan-sports" parent="Car" instance=ExtResource("3_car")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="UI"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 300.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="PixelLabel" type="Label" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Pixelation: 8"
+horizontal_alignment = 1
+
+[node name="PixelationSlider" type="HSlider" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 64.0
+value = 8.0
+
+[node name="CrushLabel" type="Label" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Color Crush: 4.0"
+horizontal_alignment = 1
+
+[node name="CrushSlider" type="HSlider" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+min_value = 0.5
+max_value = 10.0
+step = 0.1
+value = 4.0
+
+[node name="RotationLabel" type="Label" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Rotation Speed: 0.5"
+horizontal_alignment = 1
+
+[node name="RotationSlider" type="HSlider" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+min_value = 0.0
+max_value = 2.0
+step = 0.1
+value = 0.5
+
+[connection signal="value_changed" from="UI/Panel/VBoxContainer/PixelationSlider" to="." method="_on_pixelation_slider_value_changed"]
+[connection signal="value_changed" from="UI/Panel/VBoxContainer/CrushSlider" to="." method="_on_crush_slider_value_changed"]
+[connection signal="value_changed" from="UI/Panel/VBoxContainer/RotationSlider" to="." method="_on_rotation_slider_value_changed"]

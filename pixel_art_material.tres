@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://d3n2k3m4p5q6"]
+
+[ext_resource type="Shader" uid="uid://cno7pdk8x0krg" path="res://pixel_art.gdshader" id="1_shader"]
+
+[resource]
+render_priority = 10
+shader = ExtResource("1_shader")
+shader_parameter/pixelation_level = 2
+shader_parameter/crush = 4.0

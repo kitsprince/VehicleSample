@@ -52,6 +52,44 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "100"
 
+[node name="ShaderControls" type="Panel" parent="."]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 220.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ShaderControls"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="PixelLabel" type="Label" parent="ShaderControls/VBoxContainer"]
+layout_mode = 2
+text = "Pixelation: 2"
+horizontal_alignment = 1
+
+[node name="PixelationSlider" type="HSlider" parent="ShaderControls/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 64.0
+value = 2.0
+
+[node name="CrushLabel" type="Label" parent="ShaderControls/VBoxContainer"]
+layout_mode = 2
+text = "Color Crush: 4.0"
+horizontal_alignment = 1
+
+[node name="CrushSlider" type="HSlider" parent="ShaderControls/VBoxContainer"]
+layout_mode = 2
+min_value = 0.5
+max_value = 10.0
+step = 0.1
+value = 4.0
+
 [node name="GameOver" type="MarginContainer" parent="."]
 visible = false
 anchors_preset = 8

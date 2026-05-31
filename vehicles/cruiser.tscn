@@ -7,6 +7,11 @@
 [ext_resource type="Script" path="res://HealthController.gd" id="5_c41o7"]
 [ext_resource type="Texture2D" uid="uid://bmdyc2yusj412" path="res://effects/smoke/whitePuff00.png" id="6_5t1i4"]
 
+[ext_resource type="Material" uid="uid://d3n2k3m4p5q6" path="res://pixel_art_material.tres" id="px_shader_mat"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_pxart"]
+size = Vector2(2, 2)
+
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7nn1t"]
 points = PackedVector3Array(0.885022, 0.431122, 1.69222, 0.67832, 0.999501, 1.46045, -0.885022, 0.431122, 1.69222, 0.885022, 0.431122, -1.46501, -0.678494, 0.999501, 1.46045, 0.67832, 0.999501, -0.820085, -0.885022, 0.431122, -1.46501, 0.383429, 0.431122, -1.52452, 0.293852, 0.999446, -0.879602, -0.678494, 0.999501, -0.820085, -0.294025, 0.999446, -0.879602, -0.383602, 0.431122, -1.52452)
 
@@ -870,6 +875,11 @@ spring_length = 7.0
 script = ExtResource("2_d8lk2")
 
 [node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+
+[node name="PixelArtOverlay" type="MeshInstance3D" parent="SpringArm3D/Camera3D"]
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_pxart")
+surface_material_override/0 = ExtResource("px_shader_mat")
 
 [node name="EngineSound" type="AudioStreamPlayer3D" parent="SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.22599, 0)
