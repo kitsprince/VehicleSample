@@ -371,7 +371,7 @@ func _graph_test():
 	DebugDraw2D.get_graph(&"Sin Wave!").data_getter = Callable(self, &"_get_sin_wave_for_graph")
 	DebugDraw2D.get_graph(&"Sin Wave!").upside_down =false
 	
-	DebugDraw2D.get_graph(&"randf").text_suffix = "utf8 ноль zéro"
+	DebugDraw2D.get_graph(&"randf").text_suffix = "utf8 zero, eh? zéro"
 	#DebugDraw2D.get_graph(&"fps9").line_position = DebugDrawGraph.LINE_TOP
 	DebugDraw2D.get_graph(&"fps9").offset = Vector2i(0, 0)
 	#DebugDraw2D.get_graph(&"fps11").line_position = DebugDrawGraph.LINE_BOTTOM

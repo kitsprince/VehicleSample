@@ -106,5 +106,5 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="GameOver"]
 layout_mode = 2
-text = "ПОТРАЧЕНО"
+text = "SORRY, EH?"
 label_settings = SubResource("LabelSettings_38kwl")
